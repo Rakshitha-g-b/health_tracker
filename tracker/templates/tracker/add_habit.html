@@ -1,0 +1,76 @@
+{% extends 'tracker/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Add Daily Habits</h2>
+    
+    {% if success_message %}
+    <div class="alert alert-success">
+        {{ success_message }}
+    </div>
+    {% endif %}
+    
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="id_sleep_hours" class="form-label">{{ form.sleep_hours.label }}</label>
+            {{ form.sleep_hours }}
+            {% if form.sleep_hours.errors %}
+            <div class="alert alert-danger">
+                {{ form.sleep_hours.errors }}
+            </div>
+            {% endif %}
+            <div class="form-text">Recommended: 7-9 hours</div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="id_water_intake_ml" class="form-label">{{ form.water_intake_ml.label }}</label>
+            {{ form.water_intake_ml }}
+            {% if form.water_intake_ml.errors %}
+            <div class="alert alert-danger">
+                {{ form.water_intake_ml.errors }}
+            </div>
+            {% endif %}
+            <div class="form-text">Recommended: 2000-3000 ml (2-3 liters)</div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="id_exercise_minutes" class="form-label">{{ form.exercise_minutes.label }}</label>
+            {{ form.exercise_minutes }}
+            {% if form.exercise_minutes.errors %}
+            <div class="alert alert-danger">
+                {{ form.exercise_minutes.errors }}
+            </div>
+            {% endif %}
+            <div class="form-text">Recommended: 30+ minutes</div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="id_notes" class="form-label">{{ form.notes.label }}</label>
+            {{ form.notes }}
+            {% if form.notes.errors %}
+            <div class="alert alert-danger">
+                {{ form.notes.errors }}
+            </div>
+            {% endif %}
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Save Habits</button>
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+    
+    {% if show_analysis and ai_analysis %}
+    <div class="mt-4">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h4 class="mb-0">Health Analysis</h4>
+            </div>
+            <div class="card-body">
+                <pre class="mb-0">{{ ai_analysis }}</pre>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %} 

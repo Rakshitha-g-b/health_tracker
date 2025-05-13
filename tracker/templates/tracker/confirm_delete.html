@@ -1,0 +1,41 @@
+{% extends 'tracker/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Confirm Deletion</h4>
+                </div>
+                <div class="card-body">
+                    <p class="lead">Are you sure you want to delete this {{ type }}?</p>
+                    <p><strong>Date:</strong> {{ object.date|date:"F j, Y" }}</p>
+                    {% if type == 'mood entry' %}
+                        <p><strong>Mood Level:</strong> {{ object.mood_level }}/10</p>
+                        <p><strong>Notes:</strong> {{ object.notes }}</p>
+                    {% elif type == 'symptom entry' %}
+                        <p><strong>Symptom:</strong> {{ object.symptom_name }}</p>
+                        <p><strong>Severity:</strong> {{ object.severity }}/10</p>
+                        <p><strong>Notes:</strong> {{ object.notes }}</p>
+                    {% elif type == 'habit entry' %}
+                        <p><strong>Sleep Hours:</strong> {{ object.sleep_hours }}</p>
+                        <p><strong>Water Intake:</strong> {{ object.water_intake }} glasses</p>
+                        <p><strong>Exercise Minutes:</strong> {{ object.exercise_minutes }}</p>
+                        <p><strong>Notes:</strong> {{ object.notes }}</p>
+                    {% endif %}
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

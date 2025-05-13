@@ -1,0 +1,4 @@
+Django==5.0.2
+--only-binary :all:
+mysqlclient==2.2.7
+python-dotenv==1.0.1 

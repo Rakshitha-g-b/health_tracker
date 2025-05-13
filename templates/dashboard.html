@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{% url 'add_mood' %}" class="btn btn-outline-primary">Add Mood Entry</a>
+                    <a href="{% url 'add_symptom' %}" class="btn btn-outline-primary">Add Symptom</a>
+                    <a href="{% url 'add_habit' %}" class="btn btn-outline-primary">Add Daily Habits</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Recent Mood Entries</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_moods %}
+                    <div class="list-group">
+                        {% for mood in recent_moods %}
+                            <div class="list-group-item">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">Mood Level: {{ mood.get_mood_level_display }}</h6>
+                                    <small>{{ mood.date|date:"M d, Y" }}</small>
+                                </div>
+                                {% if mood.notes %}
+                                    <p class="mb-1">{{ mood.notes }}</p>
+                                {% endif %}
+                                {% if mood.ai_analysis %}
+                                    <div class="mt-2 p-2 bg-light rounded">
+                                        <small class="text-muted">AI Analysis:</small>
+                                        <p class="mb-0">{{ mood.ai_analysis|linebreaks }}</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted">No mood entries recorded yet.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Recent Symptoms</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_symptoms %}
+                    <div class="list-group">
+                        {% for symptom in recent_symptoms %}
+                            <div class="list-group-item">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">{{ symptom.symptom }}</h6>
+                                    <small>{{ symptom.date|date:"M d, Y" }}</small>
+                                </div>
+                                <p class="mb-1">Severity: {{ symptom.severity }}/10</p>
+                                {% if symptom.notes %}
+                                    <p class="mb-1">{{ symptom.notes }}</p>
+                                {% endif %}
+                                {% if symptom.ai_analysis %}
+                                    <div class="mt-2 p-2 bg-light rounded">
+                                        <small class="text-muted">AI Analysis:</small>
+                                        <p class="mb-0">{{ symptom.ai_analysis|linebreaks }}</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted">No symptoms recorded yet.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Recent Daily Habits</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_habits %}
+                    <div class="list-group">
+                        {% for habit in recent_habits %}
+                            <div class="list-group-item">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">Daily Habits</h6>
+                                    <small>{{ habit.date|date:"M d, Y" }}</small>
+                                </div>
+                                <p class="mb-1">Sleep: {{ habit.sleep_hours }} hours</p>
+                                <p class="mb-1">Water Intake: {{ habit.water_intake_ml }} ml</p>
+                                <p class="mb-1">Exercise: {{ habit.exercise_minutes }} minutes</p>
+                                {% if habit.notes %}
+                                    <p class="mb-1">{{ habit.notes }}</p>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted">No daily habits recorded yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

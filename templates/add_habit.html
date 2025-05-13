@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Add Daily Habits</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="{{ form.sleep_hours.id_for_label }}" class="form-label">Sleep Hours</label>
+                        {{ form.sleep_hours }}
+                        <div class="form-text">Enter the number of hours you slept last night (0-24)</div>
+                        {% if form.sleep_hours.errors %}
+                            <div class="alert alert-danger">
+                                {{ form.sleep_hours.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.water_intake_ml.id_for_label }}" class="form-label">Water Intake (ml)</label>
+                        {{ form.water_intake_ml }}
+                        <div class="form-text">Enter the amount of water you drank today in milliliters (0-10000)</div>
+                        {% if form.water_intake_ml.errors %}
+                            <div class="alert alert-danger">
+                                {{ form.water_intake_ml.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.exercise_minutes.id_for_label }}" class="form-label">Exercise Minutes</label>
+                        {{ form.exercise_minutes }}
+                        <div class="form-text">Enter the number of minutes you exercised today (0-1440)</div>
+                        {% if form.exercise_minutes.errors %}
+                            <div class="alert alert-danger">
+                                {{ form.exercise_minutes.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.notes.id_for_label }}" class="form-label">Notes</label>
+                        {{ form.notes }}
+                        <div class="form-text">Add any additional notes about your daily habits</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Daily Habits</button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

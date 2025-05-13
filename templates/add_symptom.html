@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Add Symptom Entry</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="{{ form.symptom.id_for_label }}" class="form-label">Symptom Name</label>
+                        {{ form.symptom }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.severity.id_for_label }}" class="form-label">Severity (1-10)</label>
+                        {{ form.severity }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.notes.id_for_label }}" class="form-label">Notes</label>
+                        {{ form.notes }}
+                        <div class="form-text">Add any additional details about your symptom. The AI will analyze your text and provide feedback.</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Symptom Entry</button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
